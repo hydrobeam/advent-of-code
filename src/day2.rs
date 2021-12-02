@@ -2,17 +2,15 @@ use std::fs;
 use std::str::FromStr;
 
 pub fn solve_day2p1() -> i32 {
-    let filename = "/home/aquabeam/Documents/Github/advent2021/day2input.txt";
+    let filename = "inputs/day2input.txt";
 
     let contents = fs::read_to_string(filename).unwrap();
-
+    let vecgang = contents.split("\n");
     let mut pos = [0, 0];
 
-    let vecgang = contents.split("\n").collect::<Vec<&str>>();
-
-    for thing in 0..(vecgang.len()) {
-        let hm: Vec<&str> = vecgang[thing].split(" ").collect();
-        
+    for thing in vecgang {
+        let hm: Vec<&str> = thing.split(" ").collect();
+        // first elem: direction, second elem: value
         match hm.as_slice() {
             ["forward", a]  => pos[0] = pos[0] + i32::from_str(a).unwrap(),
             ["up", a]  => pos[1] = pos[1] - i32::from_str(a).unwrap(),
@@ -25,16 +23,16 @@ pub fn solve_day2p1() -> i32 {
 }
 
 pub fn solve_day2p2() -> i32 {
-    let filename = "/home/aquabeam/Documents/Github/advent2021/day2input.txt";
+    let filename = "inputs/day2input.txt";
 
     let contents = fs::read_to_string(filename).unwrap();
 
     let mut pos = [0, 0, 0]; // hori, depth, aim
 
-    let vecgang = contents.split("\n").collect::<Vec<&str>>();
+    let vecgang = contents.split("\n");
 
-    for thing in 0..(vecgang.len()) {
-        let hm: Vec<&str> = vecgang[thing].split(" ").collect();
+    for thing in vecgang {
+        let hm: Vec<&str> = thing.split(" ").collect();
         
         match hm.as_slice() {
             ["forward", a]  => {

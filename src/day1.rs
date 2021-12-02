@@ -2,7 +2,7 @@ use std::fs;
 use std::str::FromStr;
 
 pub fn solve_day1p1() -> u32 {
-    let filename = "/home/aquabeam/Documents/Github/advent2021/day1input.txt";
+    let filename = "inputs/day1input.txt";
 
     let contents = fs::read_to_string(filename).expect("they makin me do this");
 
@@ -24,7 +24,7 @@ pub fn solve_day1p1() -> u32 {
 
 
 pub fn solve_day1p2() -> u32 {
-    let filename = "/home/aquabeam/Documents/Github/advent2021/day1input.txt";
+    let filename = "inputs/day1input.txt";
 
     let contents = fs::read_to_string(filename).expect("they makin me do this");
 
