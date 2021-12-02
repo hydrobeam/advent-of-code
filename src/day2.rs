@@ -7,14 +7,14 @@ pub fn solve_day2p1() -> i32 {
     let contents = fs::read_to_string(filename).unwrap();
     let vecgang = contents.split("\n");
     let mut pos = [0, 0];
-
+    
     for thing in vecgang {
-        let hm: Vec<&str> = thing.split(" ").collect();
+        let hm = thing.split_once(" ");
         // first elem: direction, second elem: value
-        match hm.as_slice() {
-            ["forward", a]  => pos[0] = pos[0] + i32::from_str(a).unwrap(),
-            ["up", a]  => pos[1] = pos[1] - i32::from_str(a).unwrap(),
-            ["down", a]  => pos[1] = pos[1] + i32::from_str(a).unwrap(),
+        match hm {
+            Some(("forward", a))  => pos[0] = pos[0] + i32::from_str(a).unwrap(),
+            Some(("up", a))  => pos[1] = pos[1] - i32::from_str(a).unwrap(),
+            Some(("down", a))  => pos[1] = pos[1] + i32::from_str(a).unwrap(),
             _ => ()
         };
     };
@@ -32,16 +32,17 @@ pub fn solve_day2p2() -> i32 {
     let vecgang = contents.split("\n");
 
     for thing in vecgang {
-        let hm: Vec<&str> = thing.split(" ").collect();
+        let hm = thing.split_once(" ");
+        // println!("{:#?}", hm);
         
-        match hm.as_slice() {
-            ["forward", a]  => {
+        match hm {
+            Some(("forward", a))  => {
                 let val: i32 = i32::from_str(a).unwrap(); 
                 pos[0] = pos[0] +val;
                 pos[1] = pos[1] + val*pos[2];
             }
-            ["up", a]  => pos[2] = pos[2] - i32::from_str(a).unwrap(),
-            ["down", a]  => pos[2] = pos[2] + i32::from_str(a).unwrap(),
+            Some(("up", a))  => pos[2] = pos[2] - i32::from_str(a).unwrap(),
+            Some(("down", a))  => pos[2] = pos[2] + i32::from_str(a).unwrap(),
             _ => ()
         };
     };
