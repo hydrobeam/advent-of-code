@@ -90,6 +90,9 @@ fn solve_day4p2() {
             for element in item.iter_mut() {
                 if *element == bongo {
                     *element = -1;
+                    // make the element equal -1 to represent it being picked
+                    // if it's been picked then the actual value isn't relevant 
+                    // for this question
                 }
             }
 
