@@ -1,3 +1,4 @@
+
 use std::fs;
 use std::str::FromStr;
 // use itertools::Itertools;
@@ -15,15 +16,14 @@ pub fn solve_day1p1() -> u32 {
     sol
 }
 
-pub fn solve_day1p2() -> () {
+pub fn solve_day1p2() {
     let filename = "inputs/day1input.txt";
 
     let contents = fs::read_to_string(filename).expect("they makin me do this");
-    let vecsquad = contents
-        .split("\n")
-        .map(|x| u32::from_str(x).unwrap())
-        .collect::<Vec<u32>>();
-    let mut var: u32 = 0;
+    // let vecsquad = contents
+    //     .split("\n")
+    //     .map(|x| u32::from_str(x).unwrap())
+    //     .collect::<Vec<u32>>();
 
     let sol = contents
         .lines()

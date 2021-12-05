@@ -1,6 +1,7 @@
 use std::fs;
 use std::str::FromStr;
 
+#[allow(clippy::cast_possible_truncation)]
 pub fn solve_day3p1() {
     let filename = "inputs/day3input.txt";
     let contents = fs::read_to_string(filename).expect("they makin me do this");
@@ -33,8 +34,12 @@ pub fn solve_day3p1() {
             total *= 2;
             total + x
         });
+
+    dbg!(hm*ho);
+
 }
 
+#[allow(clippy::cast_possible_truncation)]
 pub fn solve_day3p2() {
     let filename = "inputs/day3input.txt";
     let contents = fs::read_to_string(filename).expect("they makin me do this");
@@ -56,12 +61,11 @@ pub fn solve_day3p2() {
             .into_iter();
 
         if oxy_iter.len() == 1 {
-            println!("break");
             break;
         }
     }
 
-    println!("{}", oxy_iter.next().unwrap());
+    let a= i32::from_str_radix(oxy_iter.next().unwrap(), 2).unwrap();
 
     let mut c02_iter = vecsquad
         .filter(|&x| u8::from_str(x.split_terminator("").nth(1).unwrap()).unwrap() == 1)
@@ -79,11 +83,12 @@ pub fn solve_day3p2() {
             .into_iter();
 
         if c02_iter.len() == 1 {
-            println!("break");
             break;
         }
     }
-    println!("{}", c02_iter.next().unwrap());
+    let b= i32::from_str_radix(c02_iter.next().unwrap(), 2).unwrap();
+
+    dbg!(a*b);
 }
 
 fn do_stuff<'a, T>(vec: T, pos: usize) -> u16
@@ -99,10 +104,8 @@ where
 }
 
 fn oxyen_rating(num: u16, comp: u16) -> u8 {
-    if num == comp / 2 {
+    if num >= comp / 2 {
         // always rounds down  which could cause bugs
-        1
-    } else if num > comp / 2 {
         1
     } else {
         0
@@ -111,10 +114,7 @@ fn oxyen_rating(num: u16, comp: u16) -> u8 {
 
 fn c02_rating(num: u16, comp: u16) -> u8 {
     // dbg!(comp);
-    if num == comp / 2 {
-        // always rounds down which could cause  bugs
-        0
-    } else if num > comp / 2 {
+    if num >= comp / 2 {
         0
     } else {
         1

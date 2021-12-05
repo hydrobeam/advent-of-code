@@ -9,7 +9,6 @@ fn main() {
         .map(|x| u32::from_str(x).unwrap())
         .collect::<Vec<u32>>();
 
-    let mut vec: Vec<u32> = Vec::new();
     for hm in 0..looper.len() {
         for ah in 0..looper.len() {
             for op in 0..looper.len() {

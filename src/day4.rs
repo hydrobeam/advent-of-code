@@ -1,7 +1,7 @@
 use std::fs;
 use std::str::FromStr;
 
-fn solve_day4_p1() {
+pub fn solve_day4p1() {
     // use day1_2020::solve2020_day1p1;
 
     // use crate::day2::{solve_day2p1, solve_day2p2};
@@ -17,17 +17,15 @@ fn solve_day4_p1() {
 
     let temp_boards = file.filter(|x| !x.is_empty()).collect::<Vec<&str>>(); //nuke the whitespace
 
-    let loards = temp_boards.chunks(5).map(|x| {
+    let t_boards = temp_boards.chunks(5).map(|x| {
         x.iter()
-            .map(|y| y.split_whitespace())
-            .flatten()
+            .flat_map(|y| y.split_whitespace())
             .map(|q| i32::from_str(q).expect(q))
             .collect::<Vec<i32>>()
     });
 
-    let mut real_boards = loards.clone();
 
-    let mut boards = loards.collect::<Vec<Vec<i32>>>();
+    let mut boards = t_boards.collect::<Vec<Vec<i32>>>();
 
     // dbg!(is_bingo(&mut (-1..23).collect::<Vec<i32>>()));
     // dbg!(boards.next().unwrap());
@@ -35,7 +33,7 @@ fn solve_day4_p1() {
 
     'outer: for bongo in moves {
         // dbg!(bongo);
-        for item in boards.iter_mut() {
+        for item in &mut boards {
             for element in item.iter_mut() {
                 if element == bongo {
                     *element = -1;
@@ -54,7 +52,7 @@ fn solve_day4_p1() {
     }
 }
 
-fn solve_day4p2() {
+pub fn solve_day4p2() {
     let filename = "inputs/day4input.txt";
     let contents = fs::read_to_string(filename).expect("file not found");
     let mut file = contents.lines();
@@ -67,11 +65,10 @@ fn solve_day4p2() {
 
     let temp_boards = file.filter(|x| !x.is_empty()).collect::<Vec<&str>>();
 
-    let loards = temp_boards.chunks(5).map(|x| {
+    let t_boards = temp_boards.chunks(5).map(|x| {
         let mut m = x
             .iter()
-            .map(|y| y.split_whitespace())
-            .flatten()
+            .flat_map(|y| y.split_whitespace())
             .map(|q| i32::from_str(q).expect(q))
             .collect::<Vec<i32>>();
         m.push(-2);
@@ -80,18 +77,18 @@ fn solve_day4p2() {
           // it does not interfere with the bingo playing.
     });
 
-    let mut boards = loards.collect::<Vec<Vec<i32>>>();
+    let mut boards = t_boards.collect::<Vec<Vec<i32>>>();
 
     let mut counter = 0;
     let len_boards = boards.len();
     'outer: for bongo in moves {
         // dbg!(bongo);
-        for item in boards.iter_mut() {
+        for item in &mut boards {
             for element in item.iter_mut() {
                 if *element == bongo {
                     *element = -1;
                     // make the element equal -1 to represent it being picked
-                    // if it's been picked then the actual value isn't relevant 
+                    // if it's been picked then the actual value isn't relevant
                     // for this question
                 }
             }
@@ -122,12 +119,12 @@ fn is_bingo(vec: &mut Vec<i32>) -> bool {
 
     for a in 0..5 {
         let mut t_vec: Vec<i32> = Vec::new();
-        for b in 0..vec.len() {
+        for (b, item) in vec.iter().enumerate() {
             if b % 5 == a {
-                t_vec.push(vec[b]);
+                t_vec.push(*item);
             }
         }
-        veri_vec.push(t_vec)
+        veri_vec.push(t_vec);
     }
 
     // diag_vec not needed, oops!
@@ -136,9 +133,7 @@ fn is_bingo(vec: &mut Vec<i32>) -> bool {
     let mut v2: Vec<i32> = Vec::new();
 
     for i in 0..vec.len() {
-        if i == 0 {
-            v1.push(vec[i]);
-        } else if i == vec.len() - 1 {
+        if i == 0 || i == vec.len() - 1{
             v1.push(vec[i]);
         } else if i % 6 == 0 && i % 4 == 0 {
             v1.push(vec[i]);
@@ -146,7 +141,7 @@ fn is_bingo(vec: &mut Vec<i32>) -> bool {
         } else if i % 6 == 0 {
             v1.push(vec[i]);
         } else if i % 4 == 0 {
-            v2.push(vec[i])
+            v2.push(vec[i]);
         }
     }
 
