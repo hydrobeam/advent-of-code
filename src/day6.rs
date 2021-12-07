@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+#[allow(clippy::module_name_repetitions)]
 pub fn solve_day6() {
     let contents = include_str!("../inputs/day6input.txt");
     let fish_timers = contents
@@ -11,7 +12,7 @@ pub fn solve_day6() {
     let mut hs: HashMap<i64, i64> = HashMap::new();
 
     // janky ass solution but hey
-    
+
     // brute force the first bit up to a certain point where it's fast enough
     for elem in crack(fish_timers, days, 130) {
         *hs.entry(elem).or_insert(0) += 1;
