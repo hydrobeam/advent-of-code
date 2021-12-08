@@ -1,8 +1,5 @@
-use itertools::{self, Itertools};
-use std::{
-    collections::{HashMap, HashSet},
-    vec,
-};
+use std::collections::{HashMap, HashSet};
+use std::vec::IntoIter;
 
 pub fn solve_day8p1() {
     let contents = include_str!("../inputs/day8input.txt").lines();
@@ -30,6 +27,7 @@ pub fn solve_day8p2() {
             .map(|v| v.trim().split(' ').collect::<Vec<&str>>())
             .collect::<Vec<Vec<&str>>>()
     });
+
     for mut line in vals {
         let mut hashie: HashMap<&str, i64> = HashMap::new();
 
@@ -157,3 +155,19 @@ fn single_char_hash(s1: &HashSet<char>, s2: &HashSet<char>, s3: &HashSet<char>) 
         .copied()
         .collect::<HashSet<char>>()
 }
+
+// home-made sorted implementation
+
+trait Sort: Iterator {
+    fn sorted(self) -> IntoIter<Self::Item>
+    where
+        Self: Sized,
+        Self::Item: Ord,
+    {
+        let mut hold_vec = self.collect::<Vec<Self::Item>>();
+        hold_vec.sort_unstable();
+        hold_vec.into_iter()
+    }
+}
+
+impl<T: Sized> Sort for T where T: Iterator {}
