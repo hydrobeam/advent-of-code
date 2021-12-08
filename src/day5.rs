@@ -79,12 +79,12 @@ pub fn solve_day5p2() {
                     .collect::<Vec<u32>>()
             })
             .collect::<Vec<Vec<u32>>>()
-    });
+    }).collect::<Vec<Vec<Vec<u32>>>>();
 
     // slow!!
-    let flatty = coords.clone().flatten().flatten();
-    let cols = flatty.clone().step_by(2).max().unwrap() + 1;
-    let rows = flatty.skip(1).step_by(2).max().unwrap() + 1;
+    let flatty = coords.iter().flatten().flatten().copied().collect::<Vec<u32>>();
+    let cols = flatty.iter().step_by(2).max().unwrap() + 1;
+    let rows = flatty.iter().skip(1).step_by(2).max().unwrap() + 1;
 
     let mut scan_vec = vec![0; cols as usize * rows as usize];
     // let vec =

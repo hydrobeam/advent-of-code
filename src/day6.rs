@@ -14,7 +14,7 @@ pub fn solve_day6() {
     // janky ass solution but hey
 
     // brute force the first bit up to a certain point where it's fast enough
-    for elem in crack(fish_timers, days, 130) {
+    for elem in crack(fish_timers, days, 155) {
         *hs.entry(elem).or_insert(0) += 1;
     }
 
