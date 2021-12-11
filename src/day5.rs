@@ -24,8 +24,7 @@ pub fn solve_day5p1() {
     let rows = flatty.skip(1).step_by(2).max().unwrap() + 1; // y-values
 
     let mut scan_vec = vec![0; cols as usize * rows as usize];
-    // let vec =
-    // let max = coords.iter();
+
     for position in coords {
         let (y_1, y_2) = (position[0][1].min(position[1][1]), position[0][1].max(position[1][1]));
         let (x_1, x_2) = (position[0][0].min(position[1][0]), position[0][0].max(position[1][0]));
@@ -52,16 +51,6 @@ pub fn solve_day5p1() {
     }
 
     let count = scan_vec.into_iter().filter(|&x| x >= 2).count();
-    // for i in 0..scan_vec.len() {
-    //     if i%rows as usize == 0 && i != 0 {
-    //         println!();
-    //     }
-    //     print!("{}", scan_vec[i]);
-
-
-
-    // }
-    // println!("{:#?}", scan_vec.chunks(10));
 
     dbg!(count);
 }

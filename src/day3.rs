@@ -8,7 +8,7 @@ pub fn solve_day3p1() {
     let vecsquad = contents.lines();
 
     let mut i: u16 = 0;
-    let mut hs: Vec<u16> = vec![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let mut hs: Vec<u16> = vec![0; 12];
 
     for bit in vecsquad {
         i += 1;
@@ -41,9 +41,11 @@ pub fn solve_day3p1() {
 
 #[allow(clippy::cast_possible_truncation)]
 pub fn solve_day3p2() {
+
     let filename = "inputs/day3input.txt";
     let contents = fs::read_to_string(filename).expect("they makin me do this");
     let vecsquad = contents.lines();
+
     let mut oxy_iter = vecsquad
         .clone()
         .filter(|&x| u8::from_str(x.split_terminator("").nth(1).unwrap()).unwrap() == 0)

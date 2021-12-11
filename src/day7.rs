@@ -47,5 +47,4 @@ pub fn solve_day7p2() {
     }
     dbg!(goat_key);
     dbg!(min);
-    // dbg!(hashies);
 }

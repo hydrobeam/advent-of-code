@@ -25,19 +25,20 @@ pub fn solve_day8p2() {
     let vals = contents.map(|x| {
         x.split('|')
             .map(|v| v.trim().split(' ').collect::<Vec<&str>>())
-            .collect::<Vec<Vec<&str>>>()
     });
 
     for mut line in vals {
+        // will store the value for the sorted inputs, e.g. (acde -> 3)
         let mut hashie: HashMap<&str, i64> = HashMap::new();
 
-        let inputs = &mut line[0];
+        let inputs = &mut line.next().unwrap();
         inputs.sort_by(|a, b| (a.len()).cmp(&b.len()));
         // sort by length to get vals that we know
         let mut inputs = inputs
             .iter()
             .map(|&x| x.chars().sorted().collect::<String>());
 
+        // this kinda sucks
         let one = inputs.next().unwrap();
         let seven = inputs.next().unwrap();
         let four = inputs.next().unwrap();
@@ -46,6 +47,7 @@ pub fn solve_day8p2() {
             inputs.next().unwrap(),
             inputs.next().unwrap(),
         ];
+
         let mut d = inputs.skip(3);
         let eight = d.next().unwrap();
 
@@ -61,18 +63,23 @@ pub fn solve_day8p2() {
 
         let top: HashSet<char> = seven_hash.difference(&one_hash).copied().collect();
         let mut not_two: Vec<&str> = Vec::new();
+
         let mut two_hash: HashSet<char> = HashSet::new();
         let mut three_hash: HashSet<char> = HashSet::new();
         let mut five_hash: HashSet<char> = HashSet::new();
 
+        // pretty sure the logic here is ineffecient but it's scool
         for val in &five_lengths {
             let val_hash: HashSet<char> = val.chars().collect();
-            let bottom_wait = val_hash
+            let bottom_maybe: HashSet<char> = val_hash
                 .difference(&four_hash)
                 .copied()
-                .collect::<HashSet<char>>();
-            let bottom: HashSet<char> = bottom_wait.difference(&top).copied().collect();
-            if bottom.len() == 2 {
+                .collect::<HashSet<char>>()
+                .difference(&top)
+                .copied()
+                .collect();
+
+            if bottom_maybe.len() == 2 {
                 hashie.insert(val, 2);
                 two_hash = val.chars().collect();
             } else {
@@ -98,23 +105,21 @@ pub fn solve_day8p2() {
                 .collect::<HashSet<char>>();
 
             if temper.is_empty() {
-                // nuke one, if it is empty, then we have removed three
-                let bottom_right = nw_se.iter().copied().next().unwrap();
-                bottom_right_hash.insert(bottom_right);
+                bottom_right_hash.insert(nw_se.iter().copied().next().unwrap());
                 hashie.insert(val, 3);
                 three_hash = val.chars().collect();
             } else {
                 // if item still exists, then we have five
-                let top_left = temper.iter().copied().next().unwrap();
-                top_left_hash.insert(top_left);
+                top_left_hash.insert(temper.iter().copied().next().unwrap());
                 hashie.insert(val, 5);
                 five_hash = val.chars().collect();
             }
         }
 
-        let bottom_left = single_char_hash(&two_hash, &three_hash, &bottom_right_hash);
+        // two minu three just gives you bottom_left, so we don't need
+        let bottom_left = string_sub_string(&two_hash, &three_hash).chars().collect();
         let middle = single_char_hash(&four_hash, &one_hash, &top_left_hash);
-        let top_right = single_char_hash(&eight_hash, &five_hash, &bottom_left);
+        let top_right = string_sub_string(&four_hash, &five_hash).chars().collect();
 
         let nine = string_sub_string(&eight_hash, &bottom_left);
         let six = string_sub_string(&eight_hash, &top_right);
@@ -124,7 +129,7 @@ pub fn solve_day8p2() {
         hashie.insert(&six, 6);
         hashie.insert(&zero, 0);
 
-        let outputs = &line[1];
+        let outputs = &line.next().unwrap();
 
         let mut num_vec: Vec<i64> = Vec::new();
         for outie in outputs {
@@ -165,7 +170,7 @@ trait Sort: Iterator {
         Self::Item: Ord,
     {
         let mut hold_vec = self.collect::<Vec<Self::Item>>();
-        hold_vec.sort_unstable();
+        hold_vec.sort();
         hold_vec.into_iter()
     }
 }
