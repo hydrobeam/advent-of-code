@@ -1,9 +1,5 @@
-// use std::borrow::{Borrow, BorrowMut};
-use std::cell::{RefCell};
+use std::cell::RefCell;
 use std::rc::Rc;
-
-// use std::vec;
-// use std::io::Error;
 
 pub fn solve_day9p1() {
     let contents = include_str!("../inputs/day9input.txt")
@@ -116,8 +112,6 @@ pub fn solve_day9p1() {
 
 pub fn solve_day9p2() {
     let default_basin: Rc<RefCell<u64>> = Rc::new(RefCell::new(0));
-    // let swag: RefCell<i64> = RefCell::new(0);
-    let txt = include_str!("../inputs/day9input.txt");
     let mut contents = include_str!("../inputs/day9input.txt")
         .lines()
         .map(|x| {
@@ -156,11 +150,13 @@ pub fn solve_day9p2() {
                 let up = contents[row_index - 1][col_index].clone();
                 neighbours.push(up);
             }
+
             if col_index > 0 {
                 let left = contents[row_index][col_index - 1].clone();
                 neighbours.push(left);
             }
 
+            // only look at the neighbours that are basins
             let neighbours: Vec<Mountain> = neighbours.into_iter().filter(|x| x.in_basin).collect();
 
             match neighbours.len() {
@@ -168,16 +164,18 @@ pub fn solve_day9p2() {
                     basin_num += 1;
 
                     let basin: Rc<RefCell<u64>> = Rc::new(RefCell::new(basin_num as u64));
-                    let cellie: i64 = 1;
+                    let cellie: i64 = 0;
                     sum_pointer_vec.push(cellie);
                     basin_vec.push(basin);
 
                     val.make_basin(Rc::clone(&basin_vec[basin_num - 1]));
                     contents[row_index][col_index] = val.clone();
+                    sum_pointer_vec[basin_num - 1] += 1;
                 }
                 1 => {
-                    val.adapt_basin(&neighbours[0]);
-                    contents[row_index][col_index] = val.clone();
+                    val.in_basin = true;
+                    val.basin_num = Rc::clone(&neighbours[0].basin_num);
+                    contents[row_index][col_index] = val.to_owned();
                     let taker_num = *val.basin_num.borrow();
                     sum_pointer_vec[taker_num as usize - 1] += 1;
                 }
@@ -185,44 +183,36 @@ pub fn solve_day9p2() {
                     let top_basin = *neighbours[0].basin_num.borrow(); // up
                     let left_basin = neighbours[1].clone().basin_num; // left
                     let left_num = *left_basin.clone().borrow();
-                    // dbg!(top_basin, left_num);
-                    // dbg!(&val);
-                    // dbg!(row_index, col_index);
-                    // dbg!(&sum_pointer_vec, &basin_vec);
-                    // dbg!(&neighbours);
+
                     if top_basin != left_num {
-                        let topper = left_num.max(top_basin);
-                        let botter = left_num.min(top_basin);
+                        sum_pointer_vec[left_num as usize - 1] +=
+                            sum_pointer_vec[top_basin as usize - 1];
 
-                        sum_pointer_vec[botter as usize - 1] +=
-                            sum_pointer_vec[topper as usize - 1];
-
-                        // if left_num 
-                        *left_basin.borrow_mut() = botter;
-                        *neighbours[0].basin_num.borrow_mut() = botter;
-
-                        for basin in &basin_vec[topper as usize .. ] {
-                                *basin.borrow_mut() -= 1;
-                            }
-                        sum_pointer_vec.remove(topper as usize - 1);
-                        basin_vec.remove(topper as usize - 1);
-
-                        basin_num -= 1;
+                        *left_basin.borrow_mut() = left_num;
+                        *neighbours[0].basin_num.borrow_mut() = left_num;
+                        // just for me, set depleted basins to 0
+                        sum_pointer_vec[top_basin as usize - 1] = 0;
+                        basin_vec[top_basin as usize - 1] = Rc::new(RefCell::new(0));
                     }
 
                     val.in_basin = true;
                     val.basin_num = Rc::clone(&left_basin);
                     contents[row_index][col_index] = val.clone();
                     sum_pointer_vec[*val.basin_num.borrow() as usize - 1] += 1;
-
                 }
             };
         }
     }
-    // print!("{:#?}", contents);
-    sum_pointer_vec.sort_unstable_by(|a, b| a.cmp(b));
-    dbg!(&sum_pointer_vec[0..3]);
 
+    sum_pointer_vec.sort_unstable_by(|a, b| b.cmp(a));
+    sum_pointer_vec = sum_pointer_vec
+        .into_iter()
+        .filter(|&x| x != 0)
+        .collect::<Vec<i64>>();
+    dbg!(&sum_pointer_vec);
+    let prod:i64  = sum_pointer_vec.into_iter().take(3).product();
+    dbg!(prod);
+    // dbg!(basin_vec.into_iter().filter(|x| *x.borrow() != 0).collect::<Vec<Rc<RefCell<u64>>>>());
 }
 
 #[derive(Debug, Clone)]
@@ -236,11 +226,5 @@ impl<'a> Mountain {
     fn make_basin(&mut self, basin_num: Rc<RefCell<u64>>) {
         self.in_basin = true;
         self.basin_num = basin_num;
-    }
-
-    fn adapt_basin(&mut self, mountain: &Mountain) {
-        self.in_basin = true;
-        self.basin_num = Rc::clone(&mountain.basin_num);
-        // println!("{:#?}", self.num_members);
     }
 }
