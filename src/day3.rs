@@ -35,13 +35,11 @@ pub fn solve_day3p1() {
             total + x
         });
 
-    dbg!(hm*ho);
-
+    dbg!(hm * ho);
 }
 
 #[allow(clippy::cast_possible_truncation)]
 pub fn solve_day3p2() {
-
     let filename = "inputs/day3input.txt";
     let contents = fs::read_to_string(filename).expect("they makin me do this");
     let vecsquad = contents.lines();
@@ -67,7 +65,7 @@ pub fn solve_day3p2() {
         }
     }
 
-    let a= i32::from_str_radix(oxy_iter.next().unwrap(), 2).unwrap();
+    let a = i32::from_str_radix(oxy_iter.next().unwrap(), 2).unwrap();
 
     let mut c02_iter = vecsquad
         .filter(|&x| u8::from_str(x.split_terminator("").nth(1).unwrap()).unwrap() == 1)
@@ -88,9 +86,9 @@ pub fn solve_day3p2() {
             break;
         }
     }
-    let b= i32::from_str_radix(c02_iter.next().unwrap(), 2).unwrap();
+    let b = i32::from_str_radix(c02_iter.next().unwrap(), 2).unwrap();
 
-    dbg!(a*b);
+    dbg!(a * b);
 }
 
 fn do_stuff<'a, T>(vec: T, pos: usize) -> u16

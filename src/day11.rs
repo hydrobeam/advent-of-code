@@ -17,7 +17,7 @@ pub fn solve_day11() {
     let max_cols = contents[0].len() - 1;
 
     let mut hashie: HashMap<(usize, usize), Octo> = HashMap::new();
-    
+
     // create hashmap of octopus indices -> octopus
     for row_index in 0..contents.len() {
         for col_index in 0..contents.len() {

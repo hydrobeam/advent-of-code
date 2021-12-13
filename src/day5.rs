@@ -1,5 +1,5 @@
+use std::fs;
 use std::str::FromStr;
-use std::{fs};
 
 pub fn solve_day5p1() {
     let filename = "inputs/day5input.txt";
@@ -26,8 +26,14 @@ pub fn solve_day5p1() {
     let mut scan_vec = vec![0; cols as usize * rows as usize];
 
     for position in coords {
-        let (y_1, y_2) = (position[0][1].min(position[1][1]), position[0][1].max(position[1][1]));
-        let (x_1, x_2) = (position[0][0].min(position[1][0]), position[0][0].max(position[1][0]));
+        let (y_1, y_2) = (
+            position[0][1].min(position[1][1]),
+            position[0][1].max(position[1][1]),
+        );
+        let (x_1, x_2) = (
+            position[0][0].min(position[1][0]),
+            position[0][0].max(position[1][0]),
+        );
 
         // horizontal
         if y_2 == y_1 {
@@ -40,14 +46,13 @@ pub fn solve_day5p1() {
         } else if x_2 == x_1 {
             let index = y_1 * cols;
             let begin = index + x_1; // we at 7
-            
+
             let end = (y_2 * cols) + x_2;
 
-            for i in (begin..=end).step_by(cols as usize){
+            for i in (begin..=end).step_by(cols as usize) {
                 scan_vec[i as usize] += 1;
             }
         }
-
     }
 
     let count = scan_vec.into_iter().filter(|&x| x >= 2).count();
@@ -60,18 +65,25 @@ pub fn solve_day5p2() {
     let contents = fs::read_to_string(filename).expect("file not found");
     let file = contents.lines();
 
-    let coords = file.map(|x| {
-        x.split("->")
-            .map(|y| {
-                y.split(',')
-                    .map(|i| u32::from_str(i.trim()).expect(i))
-                    .collect::<Vec<u32>>()
-            })
-            .collect::<Vec<Vec<u32>>>()
-    }).collect::<Vec<Vec<Vec<u32>>>>();
+    let coords = file
+        .map(|x| {
+            x.split("->")
+                .map(|y| {
+                    y.split(',')
+                        .map(|i| u32::from_str(i.trim()).expect(i))
+                        .collect::<Vec<u32>>()
+                })
+                .collect::<Vec<Vec<u32>>>()
+        })
+        .collect::<Vec<Vec<Vec<u32>>>>();
 
     // slow!!
-    let flatty = coords.iter().flatten().flatten().copied().collect::<Vec<u32>>();
+    let flatty = coords
+        .iter()
+        .flatten()
+        .flatten()
+        .copied()
+        .collect::<Vec<u32>>();
     let cols = flatty.iter().step_by(2).max().unwrap() + 1;
     let rows = flatty.iter().skip(1).step_by(2).max().unwrap() + 1;
 
@@ -90,14 +102,13 @@ pub fn solve_day5p2() {
             let begin = index + x_1.min(x_2);
             let end = index + x_1.max(x_2);
 
-            for i in begin..=end  {
+            for i in begin..=end {
                 scan_vec[i as usize] += 1;
             }
-
         } else if x_2 == x_1 {
             // vertical
             let index = y_1.min(y_2) * cols;
-            let begin = index + x_1; 
+            let begin = index + x_1;
 
             let end = (y_1.max(y_2) * cols) + x_2;
 

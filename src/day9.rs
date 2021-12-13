@@ -210,7 +210,7 @@ pub fn solve_day9p2() {
         .filter(|&x| x != 0)
         .collect::<Vec<i64>>();
     dbg!(&sum_pointer_vec);
-    let prod:i64  = sum_pointer_vec.into_iter().take(3).product();
+    let prod: i64 = sum_pointer_vec.into_iter().take(3).product();
     dbg!(prod);
     // dbg!(basin_vec.into_iter().filter(|x| *x.borrow() != 0).collect::<Vec<Rc<RefCell<u64>>>>());
 }

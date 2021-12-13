@@ -1,4 +1,3 @@
-
 use std::fs;
 use std::str::FromStr;
 
@@ -23,9 +22,9 @@ fn main() {
 
         let t2 = pass.nth((range[1] - range[0] - 1) as usize).unwrap();
 
-        if t1 == chr && t2 != chr ||  t2 == chr && t1 != chr {
+        if t1 == chr && t2 != chr || t2 == chr && t1 != chr {
             i += 1;
-        } 
+        }
 
         // let count = pass.filter(|&x| x==chr).count() as u16;
         // if count >= range[0]  && count <= range[1] {

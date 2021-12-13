@@ -24,7 +24,6 @@ pub fn solve_day4p1() {
             .collect::<Vec<i32>>()
     });
 
-
     let mut boards = t_boards.collect::<Vec<Vec<i32>>>();
 
     // dbg!(is_bingo(&mut (-1..23).collect::<Vec<i32>>()));
@@ -133,7 +132,7 @@ fn is_bingo(vec: &mut Vec<i32>) -> bool {
     let mut v2: Vec<i32> = Vec::new();
 
     for i in 0..vec.len() {
-        if i == 0 || i == vec.len() - 1{
+        if i == 0 || i == vec.len() - 1 {
             v1.push(vec[i]);
         } else if i % 6 == 0 && i % 4 == 0 {
             v1.push(vec[i]);
