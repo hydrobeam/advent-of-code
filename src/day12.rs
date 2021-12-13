@@ -55,6 +55,7 @@ fn hunt(node: Junction, hoshie: HashMap<&str, Junction>, second_junc_active: boo
         if nu_node.name == "start" {
             continue;
         }
+
         if nu_node.name == "end" {
             // unsafe :flushed:
             unsafe { TOTAL += 1 };
@@ -65,6 +66,7 @@ fn hunt(node: Junction, hoshie: HashMap<&str, Junction>, second_junc_active: boo
         let size = nu_node.size;
 
         let mut new_bool: bool = second_junc_active;
+
         if let Size::Small = size {
             if nu_node.visits == 2 && second_junc_active {
                 new_bool = false;

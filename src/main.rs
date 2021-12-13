@@ -12,9 +12,8 @@ mod day7;
 mod day8;
 mod day9;
 mod day10;
-
+mod day11;
 mod day12;
-// use std::cmp::{max, min};
 // use day1_2020::solve2020_day1p1;
 
 // use crate::day1::{solve_day1p1, solve_day1p2};
@@ -27,10 +26,13 @@ mod day12;
 // use crate::day8::{solve_day8p1, solve_day8p2};
 // use crate::day9::{solve_day9p1, solve_day9p2};
 // use crate::day10::{solve_day10p1, solve_day10p2};
-use crate::day12::{solve_day12};
+use crate::day11::{solve_day11};
+
+// use crate::day12::{solve_day12};
 fn main() {
     // solve_day8p1();
     // solve_day10p1();
     // solve_day10p2();
-    solve_day12();
+    // solve_day12();
+    solve_day11()
 }
