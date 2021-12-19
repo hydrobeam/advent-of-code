@@ -1,3 +1,4 @@
+#![allow(clippy::cast_possible_truncation)]
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -175,7 +176,7 @@ pub fn solve_day9p2() {
                 1 => {
                     val.in_basin = true;
                     val.basin_num = Rc::clone(&neighbours[0].basin_num);
-                    contents[row_index][col_index] = val.to_owned();
+                    contents[row_index][col_index] = val.clone();
                     let taker_num = *val.basin_num.borrow();
                     sum_pointer_vec[taker_num as usize - 1] += 1;
                 }

@@ -6,6 +6,7 @@ mod day11;
 mod day12;
 mod day13;
 mod day14;
+mod day15;
 mod day1_2020;
 mod day2;
 mod day2_2020;
@@ -36,7 +37,8 @@ mod day9;
 // use crate::day11::solve_day11;
 // use crate::day12::solve_day12;
 // use crate::day13::solve_day13;
-use crate::day14::{solve_day14p1, solve_day14p2};
+// use crate::day14::{solve_day14p1, solve_day14p2};
+use crate::day15::{solve_day15p1, solve_day15p2};
 
 fn main() {
     // solve_day8p1();
@@ -45,7 +47,7 @@ fn main() {
     // solve_day12();
     // solve_day13();
     // solve2020_day4p1()
-    solve_day14p1(12);
-    solve_day14p2(12);
+    solve_day15p2();
+    // solve_day15p2(12);
     // swa();
 }

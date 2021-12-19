@@ -20,7 +20,7 @@ pub fn solve2020_day3p1() {
             }
             rows += slope.1;
             cols += slope.0;
-            cols = cols % num_cols;
+            cols &= num_cols;
         }
         rows = 0;
         cols = 0;
