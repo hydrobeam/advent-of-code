@@ -1,0 +1,8 @@
+/home/aquabeam/Documents/Github/advent2021/target/debug/deps/unicode_xid-3c8a88541efd8c80.rmeta: /home/aquabeam/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-xid-0.2.2/src/lib.rs /home/aquabeam/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-xid-0.2.2/src/tables.rs
+
+/home/aquabeam/Documents/Github/advent2021/target/debug/deps/libunicode_xid-3c8a88541efd8c80.rlib: /home/aquabeam/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-xid-0.2.2/src/lib.rs /home/aquabeam/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-xid-0.2.2/src/tables.rs
+
+/home/aquabeam/Documents/Github/advent2021/target/debug/deps/unicode_xid-3c8a88541efd8c80.d: /home/aquabeam/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-xid-0.2.2/src/lib.rs /home/aquabeam/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-xid-0.2.2/src/tables.rs
+
+/home/aquabeam/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-xid-0.2.2/src/lib.rs:
+/home/aquabeam/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-xid-0.2.2/src/tables.rs:
