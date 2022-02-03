@@ -1,0 +1,60 @@
+#![allow(dead_code)]
+
+mod day01;
+
+use day01::{solve_day01_p1, solve_day01_p2};
+
+fn main() {
+
+    //let tmp = include_str!("../inputs/day02_input.txt");
+    let tmp = "1,9,10,3,2,3,11,0,99,30,40,50";
+
+   let mut content = tmp
+        .split(',')
+        .map(|x| x.parse::<usize>().unwrap())
+        .collect::<Vec<usize>>();
+
+    content[1] = 12;
+    content[2] = 2;
+
+    let mut instruction_counter: usize = 0;
+    let mut curr_instruction: usize = content[instruction_counter];
+
+    loop {
+
+        dbg!(instruction_counter);
+        if curr_instruction == 99 {
+            break;
+        }
+        else if curr_instruction == 1 || curr_instruction == 2 {
+
+            dbg!(&content);
+            let addr1 = content[instruction_counter + 1];
+            let addr2 = content[instruction_counter + 2];
+            let addr3 = content[instruction_counter + 3];
+            dbg!(addr1, addr2, addr3);
+            let val1 = content[addr1];
+            let val2 = content[addr2];
+
+            if curr_instruction == 1 {
+                content[addr3] = val1 + val2;
+            } else {
+                content[addr3] = val1 * val2;
+            }
+
+            dbg!(content[addr3]);
+
+        } else {
+            panic!(
+                "something went wrong: instruction {} at addr: {}",
+                curr_instruction, instruction_counter
+            );
+        }
+
+        instruction_counter += 4;
+        curr_instruction = content[instruction_counter];
+        dbg!(curr_instruction);
+        dbg!(&content);
+    }
+
+}
