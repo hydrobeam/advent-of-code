@@ -8,9 +8,9 @@ fn dijstkra(
 ) {
     // index_mountain_map is the index-> node hashmap
 
-    let a = index_mountain_map.get_mut(&(0, 0)).unwrap();
-    a.distance = Cell::new(0);
-    a.risk = 0;
+    let cor_node = index_mountain_map.get_mut(&(0, 0)).unwrap();
+    cor_node.distance = Cell::new(0);
+    cor_node.risk = 0;
 
     let mut elements_checked = 0;
     let mut index: (usize, usize) = (0, 0);
@@ -18,7 +18,7 @@ fn dijstkra(
     while elements_checked < max_cols * max_rows {
         let curr_val = index_mountain_map.get(&index).unwrap();
 
-        let parent_dist = &curr_val.distance.get();
+        let parent_dist = curr_val.distance.get();
 
         // get valid neighbours (ones that exist in the map/ aren't visited)
         let neighbours = find_neighbours(index, max_cols - 1, max_rows - 1)
@@ -29,7 +29,7 @@ fn dijstkra(
             });
 
         for neigh in neighbours {
-            let adopted_val = *parent_dist + neigh.risk;
+            let adopted_val = parent_dist + neigh.risk;
             let neigh_dist = &neigh.distance;
             // dbg!(adopted_val);
             if neigh_dist.get() > adopted_val {
@@ -38,6 +38,7 @@ fn dijstkra(
                 // elements_touched += 1;
             }
         }
+
         curr_val.visited.set(true);
         elements_checked += 1;
         (*index_mountain_map).remove(&index);

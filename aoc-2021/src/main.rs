@@ -1,24 +1,20 @@
 #![allow(dead_code)]
 
-mod day1;
+mod day01;
+mod day02;
+mod day03;
+mod day04;
+mod day05;
+mod day06;
+mod day07;
+mod day08;
+mod day09;
 mod day10;
 mod day11;
 mod day12;
 mod day13;
 mod day14;
 mod day15;
-mod day1_2020;
-mod day2;
-mod day2_2020;
-mod day3;
-mod day3_2020;
-mod day4;
-mod day4_2020;
-mod day5;
-mod day6;
-mod day7;
-mod day8;
-mod day9;
 
 // use day1_2020::solve2020_day1p1;
 // use day3_2020::solve2020_day3p1;
@@ -50,5 +46,12 @@ fn main() {
     solve_day15p1();
     // solve_day15p2(12);
     // swa();
+    //
+    //
+    let p = vec![1, 2, 3];
+
+
+    let mut a = &p;
+    let mut b = &p;
 
 }
