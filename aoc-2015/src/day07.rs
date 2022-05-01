@@ -20,7 +20,11 @@ pub fn solve_day07() {
     // part B:
 
     //overwrite the value of "b" with that of a
-    *input_hash.get_mut("b").unwrap() = Line {op: None, val1: ValType::Immediate(a_val), val2: None};
+    *input_hash.get_mut("b").unwrap() = Line {
+        op: None,
+        val1: ValType::Immediate(a_val),
+        val2: None,
+    };
     while output_hash_map.len() < goal_len {
         for key in input_hash.keys() {
             hunt(key, &input_hash, &mut output_hash_map);
@@ -150,12 +154,6 @@ fn make_op_type(input: &str) -> OpType {
         _ => unreachable!(),
     }
 }
-
-//struct Line<T> {
-//    // option for when there is no option, and he have a setter
-//    line_type: LineType,
-//    op_struct:
-//}
 
 #[derive(Debug, Copy, Clone)]
 enum OpType {
