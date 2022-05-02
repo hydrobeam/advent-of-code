@@ -5,7 +5,7 @@ use std::str::FromStr;
 
 pub fn solve_day07() {
     let content: &str = include_str!("../inputs/day07_input.txt");
-    let mut finale = content
+    let finale = content
         .split('\n')
         .map(process_input)
         .collect::<HashMap<&str, Line>>();
@@ -18,7 +18,7 @@ pub fn solve_day07() {
     }
 
     dbg!(good_set.len());
-    dbg!(hunt2("shiny gold", &finale,0));
+    dbg!(hunt2("shiny gold", &finale, 0));
 }
 
 fn hunt<'a>(
@@ -61,7 +61,7 @@ fn hunt<'a>(
                             },
                         }
                     }
-                    if loop_ret == true {
+                    if loop_ret {
                         (*good_set).insert(the_name);
                     } else {
                         (*bad_set).insert(the_name);
@@ -74,20 +74,18 @@ fn hunt<'a>(
 }
 
 fn hunt2<'a>(the_name: &str, total_set: &'a HashMap<&'a str, Line>, mut increment: usize) -> usize {
-
     let the_line = total_set.get(the_name).unwrap();
     for val in &the_line.bag_holdings {
-        match val.quantity {
-            0 => {},
-            _ => {
+        match val.bag_name {
+            None => {}
+            Some(name) => {
                 // it's 1 because we're starting with at least one bag that must be added
-                increment += val.quantity * hunt2(val.bag_name.unwrap(), total_set, 1);
+                increment += val.quantity * hunt2(name, total_set, 1);
             }
         }
     }
 
     increment
-
 }
 
 fn process_input<'a>(var: &str) -> (&str, Line) {
@@ -110,11 +108,10 @@ fn process_input<'a>(var: &str) -> (&str, Line) {
 fn drop_bag(var: &str) -> &str {
     let byt: &[u8] = var.as_bytes();
 
-    let mut to_chop: usize = 0;
+    let to_chop: usize;
 
     match byt[0] as char {
         '1' => to_chop = 4,
-        'n' => to_chop = 0,
         _ => to_chop = 5,
     }
 
@@ -124,10 +121,11 @@ fn drop_bag(var: &str) -> &str {
 /// insert trimmed stuff in here
 /// drops the bag/bags off the end of a word line
 /// option in case there is "no bag"
+/// creates a neat n tidy struct
 fn make_quant(var: &str) -> QuantLine {
     let byt: &[u8] = var.as_bytes();
 
-    let mut to_chop: usize = 0;
+    let to_chop: usize;
 
     match byt[0] as char {
         '1' => to_chop = 4,

@@ -33,7 +33,6 @@ pub fn solve_day05() {
                     _ => unreachable!(),
                 }
             }
-
         }
 
         let seat_id: u32 = row_coord[0] * 8 + col_coord[0];

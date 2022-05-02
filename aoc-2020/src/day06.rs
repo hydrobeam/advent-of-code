@@ -1,4 +1,4 @@
-use std::collections::{HashSet, HashMap};
+use std::collections::{HashMap, HashSet};
 
 pub fn solve_day06() {
     let content: &str = include_str!("../inputs/day06_input.txt");
@@ -12,7 +12,6 @@ pub fn solve_day06() {
                 local_set.insert(chr);
             }
         }
-
 
         total_counter += local_set.len();
     }
@@ -28,7 +27,7 @@ pub fn solve_day06() {
         let mut group_len: u32 = 0;
         for line in group.split('\n') {
             for chr in line.chars() {
-                *local_map.entry(chr).or_insert(0) +=1;
+                *local_map.entry(chr).or_insert(0) += 1;
             }
             group_len += 1;
         }
