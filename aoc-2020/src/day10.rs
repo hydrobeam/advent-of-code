@@ -30,8 +30,11 @@ pub fn solve_day10() {
                     // (n)(n+1) / 2
                     // then subtract (n - 1)
                     //
-                    // as for why this works, i have no idea, found through trial and error.
+                    // as for why this formula works,
+                    // i do not know. found through trial and error and playing around with the
+                    // numbers to get the desired output
                     solutions *= (running_sum * (running_sum + 1) / 2) - (running_sum - 1);
+
                     running_sum = 0;
                 }
             }
