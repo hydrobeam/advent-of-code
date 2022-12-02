@@ -27,7 +27,7 @@ mod day24;
 mod day25;
 
 fn main() {
-    day01::solve();
+    day02::solve();
     // println!("Part 1: {}", sol.first);
     // println!("Part 2: {}", sol.second);
 }
