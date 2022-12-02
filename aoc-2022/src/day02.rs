@@ -56,15 +56,31 @@ impl Move {
     }
 
     fn play(self, other: Move) -> u64 {
-        if other == self {
+        if self.draw() == other {
             3
-        } else if (self == Move::Rock && other == Move::Scissors)
-            || (self == Move::Paper && other == Move::Rock)
-            || (self == Move::Scissors && other == Move::Paper)
-        {
+        } else if self.you_beat() == other {
             6
         } else {
             0
+        }
+    }
+
+    /// returns the item that you lose to
+    fn beats_you(self) -> Move {
+        match self {
+            Move::Rock => Move::Paper,
+            Move::Paper => Move::Scissors,
+            Move::Scissors => Move::Rock,
+        }
+    }
+    fn draw(self) -> Move {
+        self
+    }
+    fn you_beat(self) -> Move {
+        match self {
+            Move::Rock => Move::Scissors,
+            Move::Paper => Move::Rock,
+            Move::Scissors => Move::Paper,
         }
     }
 }
@@ -86,22 +102,10 @@ impl Instruction {
     }
 
     fn become_move(self, other: Move) -> Move {
-        match other {
-            Move::Rock => match self {
-                Instruction::Lose => Move::Scissors,
-                Instruction::Draw => Move::Rock,
-                Instruction::Win => Move::Paper,
-            },
-            Move::Paper => match self {
-                Instruction::Lose => Move::Rock,
-                Instruction::Draw => Move::Paper,
-                Instruction::Win => Move::Scissors,
-            },
-            Move::Scissors => match self {
-                Instruction::Lose => Move::Paper,
-                Instruction::Draw => Move::Scissors,
-                Instruction::Win => Move::Rock,
-            },
+        match self {
+            Instruction::Lose => other.you_beat(),
+            Instruction::Draw => other.draw(),
+            Instruction::Win => other.beats_you(),
         }
     }
 }
