@@ -25,9 +25,11 @@ mod day22;
 mod day23;
 mod day24;
 mod day25;
+mod day03BTree;
+mod day03hash;
 
 fn main() {
-    day03::solve();
+    day04::solve();
     // println!("Part 1: {}", sol.first);
     // println!("Part 2: {}", sol.second);
 }
