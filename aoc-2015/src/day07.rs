@@ -5,6 +5,7 @@ pub fn solve_day07() {
     let mut input_hash: HashMap<&str, Line> = content.split('\n').map(process_input).collect();
     let goal_len: usize = input_hash.len();
 
+
     // will contain completed values
     let mut output_hash_map: HashMap<&str, u16> = HashMap::with_capacity(goal_len);
 

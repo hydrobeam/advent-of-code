@@ -1,5 +1,6 @@
 pub fn solve_day12() {
-    let content: Vec<Instruction> = include_str!("../inputs/day12_input.txt").trim()
+    let content: Vec<Instruction> = include_str!("../inputs/day12_input.txt")
+        .trim()
         .split('\n')
         .map(process_input)
         .collect();
@@ -80,14 +81,14 @@ pub fn solve_day12() {
                 _ => panic!("Invalid rotation"),
             },
             Direction::F => {
-                ship.east  += line.value * waypoint.east;
+                ship.east += line.value * waypoint.east;
                 ship.north += line.value * waypoint.north;
             }
         }
     }
 
     println!(
-        "The solution to part 1 is {}",
+        "The solution to part 2 is {}",
         i64::abs(ship.east) + i64::abs(ship.north)
     );
 }

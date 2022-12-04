@@ -76,6 +76,7 @@ impl Move {
     fn draw(self) -> Move {
         self
     }
+    /// returns the item that you win against
     fn you_beat(self) -> Move {
         match self {
             Move::Rock => Move::Scissors,

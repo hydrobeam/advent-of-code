@@ -48,10 +48,4 @@ fn main() {
     // swa();
     //
     //
-    let p = vec![1, 2, 3];
-
-
-    let mut a = &p;
-    let mut b = &p;
-
 }

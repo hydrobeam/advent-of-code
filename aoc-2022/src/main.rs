@@ -25,8 +25,6 @@ mod day04;
 // mod day23;
 // mod day24;
 // mod day25;
-// mod day03BTree;
-// mod day03hash;
 
 fn main() {
     day04::solve();

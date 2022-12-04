@@ -15,4 +15,5 @@ use day04::{solve_day04_p1, solve_day04_p2};
 
 fn main() {
     solve_day04_p1();
+
 }
