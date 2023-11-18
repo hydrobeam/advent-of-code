@@ -62,6 +62,7 @@ pub fn solve() {
             .map(|stack| stack.last().unwrap())
             .collect::<String>()
     );
+
 }
 
 #[derive(Debug)]

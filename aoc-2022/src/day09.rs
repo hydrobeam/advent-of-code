@@ -139,3 +139,9 @@ impl Posn {
         Posn { x: 0, y: 0 }
     }
 }
+
+impl From<Posn> for (isize, isize) {
+    fn from(val: Posn) -> Self {
+        (val.x, val.y)
+    }
+}

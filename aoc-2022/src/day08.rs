@@ -38,6 +38,7 @@ fn det_visibility(
     col_max: usize,
     row_max: usize,
 ) {
+
     if row == 0 || col == 0 {
         // if on left or top
         forest[row][col].visible = true;

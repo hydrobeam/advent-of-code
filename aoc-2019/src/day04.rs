@@ -157,7 +157,7 @@ impl Numb {
             return true;
         }
 
-        let index:usize = 0;
+        let mut index:usize = 0;
 
         let temp_vec = self.numb_vec.clone();
 
@@ -173,7 +173,6 @@ impl Numb {
                 }
             }
 
-            if
             if self.numb_vec[index] == self.numb_vec[index + 1] {
                 if self.numb_vec[index + 1] == self.numb_vec[index+2] {
 

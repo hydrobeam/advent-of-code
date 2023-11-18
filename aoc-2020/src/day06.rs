@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 
 pub fn solve_day06() {
-    let content: &str = include_str!("../inputs/day06_input.txt");
+    let content = include_str!("../inputs/day06_input.txt");
 
     let mut total_counter: usize = 0;
     for group in content.split("\n\n") {

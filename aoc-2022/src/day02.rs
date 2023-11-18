@@ -47,7 +47,7 @@ impl Move {
             _ => unreachable!(),
         }
     }
-    fn to_score(&self) -> u64 {
+    fn to_score(self) -> u64 {
         match self {
             Move::Rock => 1,
             Move::Paper => 2,
