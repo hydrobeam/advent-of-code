@@ -1,7 +1,5 @@
 use core::{arch::asm, ffi::CStr};
 
-use alloc::ffi::CString;
-
 use crate::dbg;
 
 pub unsafe fn exit(code: i32) -> ! {

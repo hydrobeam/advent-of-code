@@ -1,6 +1,7 @@
 #![no_std]
 #![no_main]
 #![allow(internal_features)]
+#![allow(unused_imports)]
 #![feature(error_in_core)]
 #![feature(lang_items)]
 #![feature(naked_functions)]
@@ -9,14 +10,16 @@
 
 pub mod custom_alloc;
 mod days;
-use alloc::format;
-use days::*;
+mod solutions;
 pub mod syscall;
 mod utils;
 
 use crate::syscall::FileDescriptor;
+use alloc::format;
 use core::arch::asm;
 use core::ffi::CStr;
+use days::*;
+use solutions::Solution;
 
 extern crate alloc;
 
@@ -104,14 +107,41 @@ fn main(mut args: impl Iterator<Item = &'static str>) {
 
     let (p1_sol, p2_sol) = match day {
         1 => (Day01::solve_p1(input), Day01::solve_p2(input)),
+        2 => (Day02::solve_p1(input), Day02::solve_p2(input)),
+        3 => (Day03::solve_p1(input), Day03::solve_p2(input)),
+        4 => (Day04::solve_p1(input), Day04::solve_p2(input)),
+        5 => (Day05::solve_p1(input), Day05::solve_p2(input)),
+        6 => (Day06::solve_p1(input), Day06::solve_p2(input)),
+        7 => (Day07::solve_p1(input), Day07::solve_p2(input)),
+        8 => (Day08::solve_p1(input), Day08::solve_p2(input)),
+        9 => (Day09::solve_p1(input), Day09::solve_p2(input)),
+        10 => (Day10::solve_p1(input), Day10::solve_p2(input)),
+        11 => (Day11::solve_p1(input), Day11::solve_p2(input)),
+        12 => (Day12::solve_p1(input), Day12::solve_p2(input)),
+        13 => (Day13::solve_p1(input), Day13::solve_p2(input)),
+        14 => (Day14::solve_p1(input), Day14::solve_p2(input)),
+        15 => (Day15::solve_p1(input), Day15::solve_p2(input)),
+        16 => (Day16::solve_p1(input), Day16::solve_p2(input)),
+        17 => (Day17::solve_p1(input), Day17::solve_p2(input)),
+        18 => (Day18::solve_p1(input), Day18::solve_p2(input)),
+        19 => (Day19::solve_p1(input), Day19::solve_p2(input)),
+        20 => (Day20::solve_p1(input), Day20::solve_p2(input)),
+        21 => (Day21::solve_p1(input), Day21::solve_p2(input)),
+        22 => (Day22::solve_p1(input), Day22::solve_p2(input)),
+        23 => (Day23::solve_p1(input), Day23::solve_p2(input)),
+        24 => (Day24::solve_p1(input), Day24::solve_p2(input)),
+        25 => (Day25::solve_p1(input), Day25::solve_p2(input)),
         _ => todo!(),
     };
 
+    // let ret = solver!(Day01, input);
+
     println!(
         r#"Day {day}
-  Part 1: {p1_sol}
-  Part 2: {p2_sol}
-"#
+  Part 1: {}
+  Part 2: {}
+"#,
+        p1_sol, p2_sol
     )
 }
 
@@ -120,9 +150,4 @@ fn main(mut args: impl Iterator<Item = &'static str>) {
 fn panic(info: &core::panic::PanicInfo) -> ! {
     crate::println!("{info}");
     core::intrinsics::abort();
-}
-
-pub trait Solution {
-    fn solve_p1(_input: &str) -> impl core::fmt::Debug + core::fmt::Display;
-    fn solve_p2(_input: &str) -> impl core::fmt::Debug + core::fmt::Display;
 }

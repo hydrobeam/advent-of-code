@@ -46,7 +46,7 @@ unsafe impl GlobalAlloc for BumpAllocator {
         new_ptr as *mut u8
     }
 
-    unsafe fn dealloc(&self, ptr: *mut u8, layout: core::alloc::Layout) {
+    unsafe fn dealloc(&self, _ptr: *mut u8, _layout: core::alloc::Layout) {
         // no-op
     }
 }
