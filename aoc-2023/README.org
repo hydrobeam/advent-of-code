@@ -1,0 +1,11 @@
+* Aoc-2023
+
+
+These solutions are no-std/no libc. They will only run on linux since I execute syscalls that assume a linux env.
+
+The resulting binaries are statically linked since they do not depend on libc at all. This involves some boilerplate / minutiae, but it's fun.
+
+There's a custom bump allocator and functions corresponding to various syscalls at [[./src/custom_alloc.rs]] and [[./src/syscall.rs]] respectively.
+
+
+You've gotta have the source code for rust nightly available to build this, see [[./.cargo/config]]

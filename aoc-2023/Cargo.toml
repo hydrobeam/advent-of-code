@@ -1,0 +1,15 @@
+[package]
+name = "aoc-2023"
+version = "0.1.0"
+edition = "2021"
+
+[profile.dev]
+debug = true
+panic="abort"
+
+[profile.release]
+debug = true
+lto = true
+panic="abort"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
