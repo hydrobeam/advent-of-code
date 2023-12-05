@@ -117,7 +117,7 @@ pub unsafe fn read(fd: FileDescriptor, buf: *mut u8, count: usize) -> FileDescri
 }
 
 #[repr(C)]
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct Stat {
     pub st_dev: u64,
     pub st_ino: u64,
@@ -149,6 +149,20 @@ pub unsafe fn fstat(fd: FileDescriptor, buf: &mut Stat) {
         inout("rax") syscall_number => _,
         in("rdi") fd.inner(),
         in("rsi") buf as *mut Stat,
+        lateout("rcx") _, lateout("r11") _,
+        options(nostack)
+    );
+}
+
+pub unsafe fn getcwd(buf: &mut [u8], size: usize) {
+    let syscall_number = 79;
+    // let mut rax: i32 = syscall_number;
+
+    asm!(
+        "syscall",
+        inout("rax") syscall_number => _,
+        in("rdi") buf.as_ptr(),
+        in("rsi") size,
         lateout("rcx") _, lateout("r11") _,
         options(nostack)
     );

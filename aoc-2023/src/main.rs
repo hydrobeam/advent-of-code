@@ -9,6 +9,7 @@
 
 pub mod custom_alloc;
 mod days;
+use alloc::format;
 use days::*;
 pub mod syscall;
 mod utils;
@@ -69,10 +70,14 @@ fn main(mut args: impl Iterator<Item = &'static str>) {
         .parse::<u8>()
         .expect("invalid integer");
 
-    let filename = alloc::format!(
-        "/home/aquabeam/Documents/Github/advent_of_code/aoc-2023/inputs/day{day}.txt\0"
-    );
-    let fd: syscall::FileDescriptor = unsafe {
+    // const PATH_MAX: usize = 4096;
+    // let mut path_buf: [u8; 4096] = [0; PATH_MAX];
+    // unsafe { syscall::getcwd(&mut path_buf, PATH_MAX) };
+    // let path = CStr::from_bytes_until_nul(&path_buf).expect("not null terminated");
+
+    let filename = format!("inputs/day{day}.txt\0");
+
+    let fd: FileDescriptor = unsafe {
         // SAFETY: we explicitly define the terminating null byte \0 in the string,
         // so it will succeed. only 1 allocation 😎
         syscall::open(
@@ -82,21 +87,23 @@ fn main(mut args: impl Iterator<Item = &'static str>) {
         )
     };
 
+    // extract file size so we know how much to mmap
     let mut stat = syscall::Stat::default();
     unsafe { syscall::fstat(fd, &mut stat) }
 
     // 0x01 => PROT_READ
     // 0x02  => MAP_PRIVATE
     let buf = unsafe { syscall::mmap(0, stat.st_size as usize, 0x01, 0x02, fd, 0) };
+
+    // SAFETY:
+    // from_utf8_unchecked: input files are always valid utf8
+    // from_raw_parts: assume mmap gives us a proper address
     let input = unsafe {
         core::str::from_utf8_unchecked(core::slice::from_raw_parts(buf, stat.st_size as usize))
     };
 
     let (p1_sol, p2_sol) = match day {
-        1 => (
-            Day01::solve_p1(input),
-            Day01::solve_p2(input),
-        ),
+        1 => (Day01::solve_p1(input), Day01::solve_p2(input)),
         _ => todo!(),
     };
 
