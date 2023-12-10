@@ -5,14 +5,13 @@ use alloc::{boxed::Box, string::String};
 #[derive(Debug)]
 pub enum AocError {
     Incomplete,
-    Any(Box<dyn Error>),
 }
 
 impl fmt::Display for AocError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             AocError::Incomplete => f.write_str("Incomplete solution"),
-            AocError::Any(e) => write!(f, "{}", e),
+            // AocError::Any(e) => write!(f, "{}", e),
         }
     }
 }

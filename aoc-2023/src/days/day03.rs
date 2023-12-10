@@ -18,10 +18,8 @@ impl Solution for Day03 {
 
         let mut part_num_sum = 0;
         for i in 0..rows {
-            let row = l[i];
             for j in 0..cols {
-                let col = row[j];
-
+                let col = l[i][j];
                 // we have a symbol
                 if col != b'.' && !col.is_ascii_digit() {
                     let u_row = i.checked_sub(1).unwrap_or(0);
@@ -32,67 +30,22 @@ impl Solution for Day03 {
                     let mut curr_row = u_row;
                     let mut curr_col = l_col;
 
-                    // skip if u_row is 0
-                    if i != 0 {
-                        loop {
-                            // topleft/top row
-                            if curr_col > r_col {
-                                // reset
-                                curr_col = l_col;
-                                curr_row += 1;
+                    loop {
+                        // reset
+                        if curr_col > r_col {
+                            curr_col = l_col;
+                            curr_row += 1;
+
+                            if curr_row > i + 1 {
                                 break;
                             }
-                            let nam = Day03::nums_from_row(&l, curr_row, curr_col, cols);
-
-                            match nam {
-                                Some((left, right)) => {
-                                    part_num_sum +=
-                                        Day03::to_num_from_slice(&l[curr_row][left..right])?;
-                                    curr_col = right;
-                                }
-                                None => curr_col += 1,
-                            }
                         }
-                    }
-
-                    if j.checked_sub(1).is_some() {
                         let nam = Day03::nums_from_row(&l, curr_row, curr_col, cols);
-
                         if let Some((left, right)) = nam {
-                            part_num_sum += Day03::to_num_from_slice(&l[curr_row][left..right])?;
-                        }
-
-                        curr_col = r_col;
-                    }
-
-                    // middle right
-
-                    // if not at max col index
-                    if j != cols - 1 {
-                        let nam = Day03::nums_from_row(&l, curr_row, curr_col, cols);
-
-                        if let Some((left, right)) = nam {
-                            part_num_sum += Day03::to_num_from_slice(&l[curr_row][left..right])?;
-                        }
-                        curr_row += 1;
-                        curr_col = l_col;
-                    }
-
-                    if i != rows - 1 {
-                        loop {
-                            if curr_col > j + 1 {
-                                break;
-                            }
-                            let nam = Day03::nums_from_row(&l, curr_row, curr_col, cols);
-
-                            match nam {
-                                Some((left, right)) => {
-                                    part_num_sum +=
-                                        Day03::to_num_from_slice(&l[curr_row][left..right])?;
-                                    curr_col = right;
-                                }
-                                None => curr_col += 1,
-                            }
+                            part_num_sum += Day03::to_num_from_slice(&l[curr_row][left..right]);
+                            curr_col = right;
+                        } else {
+                            curr_col += 1
                         }
                     }
                 }
@@ -113,14 +66,10 @@ impl Solution for Day03 {
 
         let mut total_gear_ratio = 0;
         for i in 0..rows {
-            let row = l[i];
             for j in 0..cols {
-                let item = row[j];
-
-                let mut gear_ratio = 1;
-                let mut num_gears = 0;
+                let col = l[i][j];
                 // we have a symbol
-                if item == b'*' {
+                if col == b'*' {
                     let u_row = i.checked_sub(1).unwrap_or(0);
 
                     let l_col = j.checked_sub(1).unwrap_or(0);
@@ -129,94 +78,31 @@ impl Solution for Day03 {
                     let mut curr_row = u_row;
                     let mut curr_col = l_col;
 
-                    // skip if u_row is 0
-                    if i != 0 {
-                        loop {
-                            // topleft/top row
-                            if curr_col > r_col {
-                                // reset
-                                curr_col = l_col;
-                                curr_row += 1;
+                    let mut num_gears = 0;
+                    let mut curr_gear_ratio = 1;
+
+                    loop {
+                        // reset
+                        if curr_col > r_col {
+                            curr_col = l_col;
+                            curr_row += 1;
+
+                            if curr_row > i + 1 {
                                 break;
                             }
-                            let nam = Day03::nums_from_row(&l, curr_row, curr_col, cols);
-
-                            match nam {
-                                Some((left, right)) => {
-                                    let num = Day03::to_num_from_slice(&l[curr_row][left..right])?;
-                                    gear_ratio *= num;
-                                    num_gears += 1;
-                                    curr_col = right;
-                                }
-                                None => curr_col += 1,
-                            }
                         }
-                    }
-
-                    // middle left
-
-                    // if not at min col index
-                    if j.checked_sub(1).is_some() {
-                        // left
                         let nam = Day03::nums_from_row(&l, curr_row, curr_col, cols);
-
-                        match nam {
-                            Some((left, right)) => {
-                                let num = Day03::to_num_from_slice(&l[curr_row][left..right])?;
-
-                                gear_ratio *= num;
-                                num_gears += 1;
-                            }
-                            None => {}
-                        }
-
-                        curr_col = r_col;
-                    }
-
-                    // middle right
-
-                    // if not at max col index
-                    if j != cols - 1 {
-                        let nam = Day03::nums_from_row(&l, curr_row, curr_col, cols);
-
-                        match nam {
-                            Some((left, right)) => {
-                                let num = Day03::to_num_from_slice(&l[curr_row][left..right])?;
-                                gear_ratio *= num;
-                                num_gears += 1;
-                            }
-                            None => {}
-                        }
-                        curr_row += 1;
-                        curr_col = l_col;
-                    }
-
-                    if i != rows - 1 {
-                        loop {
-                            if curr_col > j + 1 {
-                                break;
-                            }
-                            let nam = Day03::nums_from_row(&l, curr_row, curr_col, cols);
-
-                            match nam {
-                                Some((left, right)) => {
-                                    let num = Day03::to_num_from_slice(&l[curr_row][left..right])?;
-                                    if gear_ratio == 0 {
-                                        gear_ratio = num;
-                                    } else {
-                                        gear_ratio *= num;
-                                    }
-                                    num_gears += 1;
-                                    curr_col = right;
-                                }
-                                None => curr_col += 1,
-                            }
+                        if let Some((left, right)) = nam {
+                            curr_gear_ratio *= Day03::to_num_from_slice(&l[curr_row][left..right]);
+                            num_gears += 1;
+                            curr_col = right;
+                        } else {
+                            curr_col += 1
                         }
                     }
 
-                    // final
                     if num_gears == 2 {
-                        total_gear_ratio += gear_ratio;
+                        total_gear_ratio += curr_gear_ratio;
                     }
                 }
             }
@@ -227,9 +113,9 @@ impl Solution for Day03 {
 }
 
 impl Day03 {
-    fn to_num_from_slice(val: &[u8]) -> Result<u32, AocError> {
+    fn to_num_from_slice(val: &[u8]) -> u32 {
         let src = unsafe { core::str::from_utf8_unchecked(val) };
-        u32::from_str_radix(src, 10).map_err(|op| AocError::Any(Box::new(op)))
+        u32::from_str_radix(src, 10).unwrap()
     }
 
     fn nums_from_row(
