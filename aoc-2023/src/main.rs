@@ -66,6 +66,21 @@ pub unsafe fn pre_main(stack_top: *const u8) {
     syscall::exit(0);
 }
 
+macro_rules! output_sol {
+    ($day:ident, $v1:ident, $v2:ident) => {
+        $crate::println!(
+            r#"
+Day {}
+    Part 1: {}
+    Part 2: {}
+"#,
+            $day,
+            $v1,
+            $v2
+        )
+    };
+}
+
 fn main(mut args: impl Iterator<Item = &'static str>) {
     let day = args
         .nth(1)
@@ -134,15 +149,18 @@ fn main(mut args: impl Iterator<Item = &'static str>) {
         _ => todo!(),
     };
 
-    // let ret = solver!(Day01, input);
-
-    println!(
-        r#"Day {day}
-  Part 1: {}
-  Part 2: {}
-"#,
-        p1_sol, p2_sol
-    )
+    match (p1_sol, p2_sol) {
+        (Ok(s1), Ok(s2)) => output_sol!(day, s1, s2),
+        (Ok(s1), Err(e)) => {
+            output_sol!(day, s1, e)
+        }
+        (Err(e), Ok(s2)) => {
+            output_sol!(day, e, s2)
+        }
+        (Err(e1), Err(e2)) => {
+            output_sol!(day, e1, e2)
+        }
+    }
 }
 
 #[cfg(not(test))]

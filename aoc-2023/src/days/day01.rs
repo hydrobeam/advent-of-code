@@ -1,11 +1,11 @@
 use crate::dbg;
-use crate::solutions::{AocSol, Solution};
+use crate::solutions::{AocError, AocResult, AocSol, Solution};
 
 pub struct Day01;
 
 impl Solution for Day01 {
-    fn solve_p1(input: &str) -> AocSol {
-        input
+    fn solve_p1(input: &str) -> AocResult {
+        Ok(input
             .lines()
             .map(|line| {
                 let l = line.as_bytes();
@@ -20,11 +20,11 @@ impl Solution for Day01 {
                 ((l[i1] - 48) as usize) * 10 + ((l[i2] - 48) as usize)
             })
             .sum::<usize>()
-            .into()
+            .into())
     }
 
-    fn solve_p2(input: &str) -> AocSol {
-        input
+    fn solve_p2(input: &str) -> AocResult {
+        Ok(input
             .lines()
             .map(|line| {
                 let l = line.as_bytes();
@@ -160,13 +160,13 @@ impl Solution for Day01 {
                 ((first_val * 10) + second_val) as usize
             })
             .sum::<usize>()
-            .into()
+            .into())
     }
 }
 
 // mod test {
 //     use crate::dbg;
-//     use crate::solutions::{AocSol, Solution};
+//     use crate::solutions::{AocSol, AocError, AocResult, Solution, Result};
 
 //     use super::Day01;
 

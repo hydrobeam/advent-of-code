@@ -1,8 +1,29 @@
-use alloc::string::String;
+use core::{error::Error, fmt};
+
+use alloc::{boxed::Box, string::String};
+
+#[derive(Debug)]
+pub enum AocError {
+    Incomplete,
+    Any(Box<dyn Error>),
+}
+
+impl fmt::Display for AocError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            AocError::Incomplete => f.write_str("Incomplete solution"),
+            AocError::Any(e) => write!(f, "{}", e),
+        }
+    }
+}
+
+impl Error for AocError {}
+
+pub type AocResult = Result<AocSol, AocError>;
 
 pub trait Solution {
-    fn solve_p1(_input: &str) -> AocSol;
-    fn solve_p2(_input: &str) -> AocSol;
+    fn solve_p1(_input: &str) -> AocResult;
+    fn solve_p2(_input: &str) -> AocResult;
 }
 
 #[derive(Debug)]

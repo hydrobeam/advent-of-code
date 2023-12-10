@@ -1,5 +1,5 @@
 use crate::dbg;
-use crate::solutions::{AocSol, Solution};
+use crate::solutions::{AocError, AocResult, AocSol, Solution};
 
 pub struct Day02;
 
@@ -21,12 +21,12 @@ impl From<(u8, usize)> for Colour {
 }
 
 impl Solution for Day02 {
-    fn solve_p1(input: &str) -> AocSol {
+    fn solve_p1(input: &str) -> AocResult {
         const RED_LIMIT: usize = 12;
         const GREEN_LIMIT: usize = 13;
         const BLUE_LIMIT: usize = 14;
 
-        input
+        Ok(input
             .lines()
             .map(|line| {
                 let ind = line.find(':').unwrap();
@@ -58,11 +58,11 @@ impl Solution for Day02 {
                 }
             })
             .sum::<usize>()
-            .into()
+            .into())
     }
 
-    fn solve_p2(input: &str) -> AocSol {
-        input
+    fn solve_p2(input: &str) -> AocResult {
+        Ok(input
             .lines()
             .map(|line| {
                 let ind = line.find(':').unwrap();
@@ -99,6 +99,6 @@ impl Solution for Day02 {
                     .product::<usize>()
             })
             .sum::<usize>()
-            .into()
+            .into())
     }
 }
