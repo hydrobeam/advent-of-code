@@ -22,9 +22,9 @@ impl Solution for Day03 {
                 let col = l[i][j];
                 // we have a symbol
                 if col != b'.' && !col.is_ascii_digit() {
-                    let u_row = i.checked_sub(1).unwrap_or(0);
+                    let u_row = i.saturating_sub(1);
 
-                    let l_col = j.checked_sub(1).unwrap_or(0);
+                    let l_col = j.saturating_sub(1);
                     let r_col = if j + 1 == cols { j } else { j + 1 };
 
                     let mut curr_row = u_row;
@@ -70,9 +70,9 @@ impl Solution for Day03 {
                 let col = l[i][j];
                 // we have a symbol
                 if col == b'*' {
-                    let u_row = i.checked_sub(1).unwrap_or(0);
+                    let u_row = i.saturating_sub(1);
 
-                    let l_col = j.checked_sub(1).unwrap_or(0);
+                    let l_col = j.saturating_sub(1);
                     let r_col = if j + 1 == cols { j } else { j + 1 };
 
                     let mut curr_row = u_row;
