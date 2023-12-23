@@ -7,6 +7,7 @@
 #![feature(naked_functions)]
 #![feature(lazy_cell)]
 #![feature(core_intrinsics)]
+#![feature(iter_array_chunks)]
 
 pub mod custom_alloc;
 mod days;
