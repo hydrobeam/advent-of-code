@@ -36,6 +36,10 @@ impl Solution for Day06 {
             //
             // quadratic formula:
             // x = (-b +/- sqrt(b^2 - 4ac))/2a
+            // ways = (-b - sqrt(b^2 - 4ac))/2a - (-b + sqrt(b^2 - 4ac)/2a)
+            //      = -2sqrt(b^2 - 4ac)/2a
+            //      ( a -> -1)
+            //      = sqrt(b^2 - 4ac)
             let t = time;
             let r = distance;
             let det = t * t - 4_f32 * (-1_f32) * (-r);
@@ -55,41 +59,32 @@ impl Solution for Day06 {
                 )
             };
 
-            let max_build_up = (-t - det_sqrt) / -2_f32;
-            let min_build_up = (-t + det_sqrt) / -2_f32;
+            // +/- 1 round/up down handles the case of exact hits (we need to adjsut the index)
+            let max_build_up = (-t - det_sqrt) / -2_f32 - 1.0;
+            let min_build_up = (-t + det_sqrt) / -2_f32 + 1.0;
+            // dbg!(min_build_up, max_build_up);
 
             let top: f32;
-            // round down
+            // -1 round up
             unsafe {
                 core::arch::asm!(
-                    "roundss {0}, {0}, 01b",
+                    "roundss {0}, {0}, 10b",
                     inlateout(xmm_reg) max_build_up => top,
                     options(nostack)
                 )
             };
 
             let bot: f32;
-            // round down
+            // +1 round down
             unsafe {
                 core::arch::asm!(
-                    "roundss {0}, {0}, 10b",
+                    "roundss {0}, {0}, 01b",
                     inlateout(xmm_reg) min_build_up => bot,
                     options(nostack)
                 )
             };
 
-            let low: f32;
-            // round down
-            unsafe {
-                core::arch::asm!(
-                    "roundss {0}, {0}, 01b",
-                    inlateout(xmm_reg) det_sqrt => low,
-                    options(nostack)
-                )
-            };
-
             tot_ways *= top - bot + 1.0;
-
         }
         Ok(AocSol::String(tot_ways.to_string()))
     }
@@ -124,24 +119,25 @@ impl Solution for Day06 {
             )
         };
 
-        let max_build_up = (-t - det_sqrt) / -2_f64;
-        let min_build_up = (-t + det_sqrt) / -2_f64;
+        // +/- 1 round/up down handles the case of exact hits (we need to adjsut the index)
+        let max_build_up = (-t - det_sqrt) / -2_f64 - 1.0;
+        let min_build_up = (-t + det_sqrt) / -2_f64 + 1.0;
 
         let top: f64;
-        // round down
+        // -1 round up
         unsafe {
             core::arch::asm!(
-                "roundsd {0}, {0}, 01b",
+                "roundsd {0}, {0}, 10b",
                 inlateout(xmm_reg) max_build_up => top,
                 options(nostack)
             )
         };
 
         let bot: f64;
-        // round up
+        // +1 round down
         unsafe {
             core::arch::asm!(
-                "roundsd {0}, {0}, 10b",
+                "roundsd {0}, {0}, 01b",
                 inlateout(xmm_reg) min_build_up => bot,
                 options(nostack)
             )
