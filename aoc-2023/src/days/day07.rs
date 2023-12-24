@@ -261,7 +261,6 @@ impl Solution for Day07 {
                     num_jokers += 1;
                     ind += 1;
                 }
-                // let num_jokers = sorted_arr.iter().filter(|&&x| x == Card::J).count();
 
                 let ty = match obj_arr.partition_dedup().0.len() {
                     1 => HandType::FiveKind,
