@@ -8,6 +8,7 @@
 #![feature(lazy_cell)]
 #![feature(core_intrinsics)]
 #![feature(iter_array_chunks)]
+#![feature(slice_partition_dedup)]
 
 pub mod custom_alloc;
 mod days;
