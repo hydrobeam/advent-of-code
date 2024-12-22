@@ -24,7 +24,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
     let day = args[1].parse::<u8>().expect("invalid day number passed");
 
-    let input = read_to_string(format!("inputs/day{day}.txt\0"))?;
+    let input = read_to_string(format!("inputs/day{day}.txt"))?;
 
     let (p1_sol, p2_sol) = match day {
         1 => (Day01::solve_p1(&input), Day01::solve_p2(&input)),
