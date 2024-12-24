@@ -17,7 +17,6 @@ impl Solution for Day09 {
             .peekable();
 
         let LIMIT = histories.peek().unwrap().clone().count() - 1;
-        // const LIMIT: usize = 20;
 
         // cascading arrays
         let mut working_space: Vec<Vec<isize>> = Vec::with_capacity(LIMIT);

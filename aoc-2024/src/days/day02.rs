@@ -1,6 +1,4 @@
-use std::collections::HashMap;
-
-use crate::solutions::{AocError, AocResult, AocSol, Solution};
+use crate::solutions::{AocResult, AocSol, Solution};
 
 pub struct Day02;
 

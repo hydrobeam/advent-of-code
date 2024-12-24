@@ -28,6 +28,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let (p1_sol, p2_sol) = match day {
         1 => (Day01::solve_p1(&input), Day01::solve_p2(&input)),
+        2 => (Day02::solve_p1(&input), Day02::solve_p2(&input)),
+        3 => (Day03::solve_p1(&input), Day03::solve_p2(&input)),
         _ => panic!("day dne"),
     };
 
