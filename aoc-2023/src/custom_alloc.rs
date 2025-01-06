@@ -12,7 +12,9 @@ macro_rules! try_null {
 
 /// Standard Bump allocator
 ///
-/// Bumps downwards. Based on: https://fitzgeraldnick.com/2019/11/01/always-bump-downwards.html
+/// Bumps downwards. Based on:
+/// https://web.archive.org/web/20230330161042/https://fitzgeraldnick.com/2019/11/01/always-bump-downwards.html
+
 #[derive(Debug)]
 pub struct BumpAllocator {
     ptr: Cell<*mut u8>,

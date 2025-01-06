@@ -1,9 +1,6 @@
 use core::str;
 
-use crate::{
-    solutions::{AocResult, AocSol, Solution},
-    AocError,
-};
+use crate::solutions::{AocResult, AocSol, Solution};
 
 pub struct Day03;
 

@@ -19,8 +19,12 @@ impl Error for AocError {}
 pub type AocResult = Result<AocSol, AocError>;
 
 pub trait Solution {
-    fn solve_p1(_input: &str) -> AocResult;
-    fn solve_p2(_input: &str) -> AocResult;
+    fn solve_p1(_input: &str) -> AocResult {
+        Err(AocError::Incomplete)
+    }
+    fn solve_p2(_input: &str) -> AocResult {
+        Err(AocError::Incomplete)
+    }
 }
 
 #[derive(Debug)]

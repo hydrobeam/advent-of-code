@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::solutions::{AocError, AocResult, AocSol, Solution};
+use crate::solutions::{AocResult, AocSol, Solution};
 
 pub struct Day01;
 
@@ -42,9 +42,9 @@ impl Solution for Day01 {
             *a += 1;
         });
 
-        let sum = l1.iter().fold(0, |acc, v| {
-            acc + (v * l2.get(v).unwrap_or(&0))
-        });
+        let sum = l1
+            .iter()
+            .fold(0, |acc, v| acc + (v * l2.get(v).unwrap_or(&0)));
 
         Ok(AocSol::Unsigned(sum as usize))
     }
